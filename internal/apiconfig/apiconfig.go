@@ -2,9 +2,9 @@
 // for the Codex Security forked osv-scanner.
 //
 // All external API calls should use these constants instead of upstream defaults
-// to ensure requests only go to codexsecurity-owned domains.
+// to ensure requests only go to O3-owned domains.
 //
-// The routing-backend proxy (data-api.codexsecurity.io) maps:
+// The routing-backend proxy (data-api.o3.security) maps:
 //
 //	/osv/*                  → https://api.osv.dev/*
 //	/osv-vulnerabilities/*  → https://osv-vulnerabilities.storage.googleapis.com/*
@@ -13,7 +13,7 @@ package apiconfig
 
 const (
 	// RoutingBackendBaseURL is the base domain of the routing proxy.
-	RoutingBackendBaseURL = "https://data-api.codexsecurity.io"
+	RoutingBackendBaseURL = "https://data-api.o3.security"
 
 	// CodexSecurityBaseURL is the base URL for vulnerability queries.
 	// Routes through /osv/* on the routing-backend proxy → api.osv.dev

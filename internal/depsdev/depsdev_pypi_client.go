@@ -48,7 +48,7 @@ type PyPIDepsDevClient struct {
 
 // NewPyPIDepsDevClient creates a new client for the deps.dev REST API.
 // baseURL should be the deps.dev API endpoint, e.g. "https://api.deps.dev"
-// or a proxy like "https://data-api.codexsecurity.io/deps".
+// or a proxy like "https://data-api.o3.security/deps".
 func NewPyPIDepsDevClient(baseURL string) *PyPIDepsDevClient {
 	return &PyPIDepsDevClient{
 		baseURL: baseURL,
