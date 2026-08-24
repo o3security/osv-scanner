@@ -18,10 +18,16 @@ builds:
       - "-X github.com/google/osv-scanner/v2/internal/version.OSVVersion={{.Version}}"
       - "-X github.com/google/osv-scanner/v2/cmd/osv-scanner/internal/cmd.commit={{.Commit}}"
       - "-X github.com/google/osv-scanner/v2/cmd/osv-scanner/internal/cmd.date={{.CommitDate}}"
+    # Linux only, both architectures. macOS and Windows are deliberately not
+    # built: this binary runs in CI runners and scan containers, which are
+    # Linux — amd64 for standard runners, arm64 for ARM runners and Graviton.
+    # Upstream ships darwin/windows for desktop use; we have no such consumer,
+    # and each extra target is another artifact to build, sign and support.
     goos:
       - linux
     goarch:
       - amd64
+      - arm64
 
 archives:
   - formats: binary
