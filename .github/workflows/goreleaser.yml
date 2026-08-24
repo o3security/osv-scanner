@@ -39,12 +39,23 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create 'latest' release
+        # Publish one asset per architecture, named the way upstream names them,
+        # so a client can resolve its own binary as osv-scanner_linux_<arch>.
+        #
+        # With `formats: binary` goreleaser does not emit a separate archive
+        # file — the built binary stays at dist/<id>_<target>/osv-scanner, where
+        # <target> carries a microarchitecture suffix (_v1, _v8.0). Uploading
+        # that path directly published a single asset called plain
+        # "osv-scanner": no architecture in the name, and nowhere to put a
+        # second one. gh's `path#name` syntax sets the asset name explicitly,
+        # which keeps the naming stable even if the suffix changes.
         run: |
           gh release create latest \
-            dist/osv-scanner_linux_amd64_v1/osv-scanner \
+            "dist/osv-scanner_linux_amd64_v1/osv-scanner#osv-scanner_linux_amd64" \
+            "dist/osv-scanner_linux_arm64_v8.0/osv-scanner#osv-scanner_linux_arm64" \
             dist/osv-scanner_SHA256SUMS \
             --title "Latest Build" \
-            --notes "Automated build from main branch ($(date -u +%Y-%m-%d %H:%M UTC)). Commit: ${{ github.sha }}" \
+            --notes "Automated build from main branch ($(date -u +'%Y-%m-%d %H:%M UTC')). Commit: ${{ github.sha }}" \
             --latest
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
